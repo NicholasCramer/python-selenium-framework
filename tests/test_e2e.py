@@ -1,12 +1,10 @@
 import pytest
-
+from pages.cart import CartPage
+from pages.confirm import ConfirmPage
+from pages.shop import ShopPage
 from pages.home import HomePage
 from utilities.BaseClass import BaseClass
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestOne(BaseClass):
@@ -14,23 +12,23 @@ class TestOne(BaseClass):
     def test_e2e(self):
 
         home_page = HomePage(self.browser)
-        home_page.shop_items().click()
-        product_elements = self.browser.find_elements(By.XPATH, "//div[@class='card h-100']")
+        home_page.get_shop_items().click()
+        shop_page = ShopPage(self.browser)
+        product_elements = shop_page.get_product_elements()
         for product in product_elements:
             product_name = product.find_element(By.XPATH, "div/h4/a").text
             if product_name == "Blackberry":
                 product.find_element(By.XPATH, "div/button").click()
 
-        self.browser.find_element(By.CSS_SELECTOR, ".nav-link.btn.btn-primary").click()
-        self.browser.find_element(By.CSS_SELECTOR, ".btn.btn-success").click()
-        self.browser.find_element(By.ID, "country").send_keys("United")
-        wait = WebDriverWait(self.browser, 10)
-        wait.until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "United States of America")))
-        self.browser.find_element(By.LINK_TEXT, "United States of America").click()
-        self.browser.find_element(By.CSS_SELECTOR, ".checkbox.checkbox-primary").click()
-        self.browser.find_element(By.CSS_SELECTOR, "input[type='submit']").click()
+        shop_page.get_cart_button().click()
+        cart_page = CartPage(self.browser)
+        cart_page.get_checkout_button().click()
+        confirm_page = ConfirmPage(self.browser)
+        confirm_page.get_location_field().send_keys("United")
+        confirm_page.get_search_suggestion().click()
+        confirm_page.get_confirm_box().click()
+        confirm_page.get_checkout_btn().click()
 
-        success_text = self.browser.find_element(By.CLASS_NAME, "alert-success").text
+        success_text = confirm_page.get_success_text().text
 
         assert "Success! Thank you!" in success_text
-
