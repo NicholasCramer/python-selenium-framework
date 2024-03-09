@@ -1,4 +1,6 @@
 import pytest
+
+from pages.home import HomePage
 from utilities.BaseClass import BaseClass
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -11,7 +13,8 @@ class TestOne(BaseClass):
 
     def test_e2e(self):
 
-        self.browser.find_element(By.CSS_SELECTOR, "a[href*='shop']").click()
+        home_page = HomePage(self.browser)
+        home_page.shop_items().click()
         product_elements = self.browser.find_elements(By.XPATH, "//div[@class='card h-100']")
         for product in product_elements:
             product_name = product.find_element(By.XPATH, "div/h4/a").text
