@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 
+from pages.shop import ShopPage
+
 
 class HomePage:
 
@@ -8,5 +10,7 @@ class HomePage:
 
     shop = (By.CSS_SELECTOR, "a[href*='shop']")
 
-    def get_shop_items(self):
-        return self.browser.find_element(*HomePage.shop)
+    def navigate_to_shop(self):
+        self.browser.find_element(*HomePage.shop).click()
+        shop_page = ShopPage(self.browser)
+        return shop_page

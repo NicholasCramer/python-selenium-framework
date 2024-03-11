@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 
+from pages.confirm import ConfirmPage
+
 
 class CartPage:
 
@@ -8,5 +10,8 @@ class CartPage:
 
     checkout_btn = (By.CSS_SELECTOR, ".btn.btn-success")
 
-    def get_checkout_button(self):
-        return self.browser.find_element(*CartPage.checkout_btn)
+    def go_to_checkout(self):
+        self.browser.find_element(*CartPage.checkout_btn).click()
+        confirm_page = ConfirmPage(self.browser)
+        return confirm_page
+
