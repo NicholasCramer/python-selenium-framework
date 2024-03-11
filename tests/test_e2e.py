@@ -3,7 +3,7 @@ from utilities.BaseClass import BaseClass
 from selenium.webdriver.common.by import By
 
 
-class TestOne(BaseClass):
+class TestCheckoutProcess(BaseClass):
 
     def test_e2e(self):
 
