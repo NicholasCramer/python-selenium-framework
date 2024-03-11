@@ -18,6 +18,7 @@ class TestOne(BaseClass):
         cart_page = shop_page.get_cart_button()
         confirm_page = cart_page.go_to_checkout()
         confirm_page.get_location_field().send_keys("United")
+        self.verify_link_presence("United States of America")
         confirm_page.get_search_suggestion().click()
         confirm_page.get_confirm_box().click()
         confirm_page.get_checkout_btn().click()

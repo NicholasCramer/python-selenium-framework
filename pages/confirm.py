@@ -18,8 +18,6 @@ class ConfirmPage:
         return self.browser.find_element(*ConfirmPage.location_field)
 
     def get_search_suggestion(self):
-        wait = WebDriverWait(self.browser, 10)
-        wait.until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "United States of America")))
         return self.browser.find_element(*ConfirmPage.search_suggestion)
 
     def get_confirm_box(self):
