@@ -44,6 +44,10 @@ Step 4: Download and Install Jenkins
 - Provide the path to the JDK
 - Select Install
 
+The Jenkins service can be stopped and started via command line with the following commands:
+- net stop jenkins
+- net start jenkins
+
 Step 5: Create Jenkins Job
 
 
